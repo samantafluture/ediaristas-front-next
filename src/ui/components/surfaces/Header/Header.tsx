@@ -1,10 +1,26 @@
-import { Container, Toolbar } from '@mui/material';
+import {
+    Container,
+    Toolbar,
+    IconButton,
+    MenuList,
+    MenuItem,
+    Divider
+} from '@mui/material';
+import { useState } from 'react';
+import useIsMobile from 'data/hooks/useIsMobile';
 import Link from 'ui/components/navigation/Link/Link';
 import RoundedButton from 'ui/components/inputs/RoundedButton/RoundedButton';
-import { HeaderAppBar, HeaderLogo, ButtonsContainer } from './Header.style';
+import {
+    HeaderAppBar,
+    HeaderLogo,
+    ButtonsContainer,
+    HeaderDrawer
+} from './Header.style';
 
 const Header = () => {
-    return <HeaderDesktop />;
+    const isMobile = useIsMobile();
+
+    return isMobile ? <HeaderMobile /> : <HeaderDesktop />;
 };
 
 const HeaderDesktop = () => {
@@ -33,6 +49,49 @@ const HeaderDesktop = () => {
                         Login
                     </Link>
                 </ButtonsContainer>
+            </Toolbar>
+        </HeaderAppBar>
+    );
+};
+
+const HeaderMobile = () => {
+    const [isDrawerOpen, setDrawerOpen] = useState(false);
+
+    return (
+        <HeaderAppBar>
+            <Toolbar component={Container}>
+                <IconButton
+                    edge={'start'}
+                    color={'inherit'}
+                    onClick={() => setDrawerOpen(true)}
+                >
+                    <i className={'twf-bars'} />
+                </IconButton>
+
+                <Link href={'/'}>
+                    <HeaderLogo
+                        src={'/img/logos/logo.svg'}
+                        alt={'e-diaristas'}
+                    />
+                </Link>
+
+                <HeaderDrawer
+                    open={isDrawerOpen}
+                    onClose={() => setDrawerOpen(false)}
+                    onClick={() => setDrawerOpen(false)}
+                >
+                    <MenuList>
+                        <Link href={'/login'} Component={MenuItem}>
+                            Login
+                        </Link>
+
+                        <Divider />
+
+                        <Link href={'/cadastro/diarista'} Component={MenuItem}>
+                            Seja um(a) diarista
+                        </Link>
+                    </MenuList>
+                </HeaderDrawer>
             </Toolbar>
         </HeaderAppBar>
     );
