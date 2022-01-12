@@ -12,5 +12,6 @@
     "prettier.useTabs": true,
     "cSpell.language": "en,pt-BR",
     "prettier.singleQuote": true,
-    "prettier.jsxSingleQuote": true
+    "prettier.jsxSingleQuote": true,
+    "explorer.compactFolders": false
 }
